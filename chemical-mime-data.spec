@@ -7,6 +7,7 @@ Group:          System/Libraries
 License:        LGPL
 URL:            http://sourceforge.net/projects/chemical-mime/
 Source0:        http://dl.sourceforge.net/chemical-mime/%{name}-%{version}.tar.bz2
+BuildRoot:      %{_tmppath}/%{name}-%{version}-buildroot
 BuildArch:      noarch
 BuildRequires:  perl(XML::Parser)
 BuildRequires:  libxml2-devel
