@@ -1,6 +1,6 @@
 Name:           chemical-mime-data
 Version:        0.1.94
-Release:        %mkrel 4
+Release:        %mkrel 5
 Summary:        Support for chemical/* MIME types
 
 Group:          System/Libraries
