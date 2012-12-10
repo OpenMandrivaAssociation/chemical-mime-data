@@ -1,24 +1,23 @@
 Name:           chemical-mime-data
 Version:        0.1.94
-Release:        %mkrel 6
+Release:        7
 Summary:        Support for chemical/* MIME types
 
 Group:          System/Libraries
-License:        LGPL
+License:        LGPLv2.1
 URL:            http://sourceforge.net/projects/chemical-mime/
 Source0:        http://dl.sourceforge.net/chemical-mime/%{name}-%{version}.tar.bz2
-BuildRoot:      %{_tmppath}/%{name}-%{version}-buildroot
+Patch0:		chemical-mime-data-0.1.94-rosa-rsvg.patch
 BuildArch:      noarch
-BuildRequires:  perl(XML::Parser)
 BuildRequires:  libxml2-devel
 BuildRequires:  libxslt-devel
-BuildRequires:  librsvg2-devel
 BuildRequires:  shared-mime-info
 BuildRequires:  pkgconfig
 BuildRequires:  intltool
 BuildRequires:  gettext-devel
 BuildRequires:  libxslt-proc
 BuildRequires:	librsvg
+BuildRequires:	pkgconfig(librsvg-2.0)
 Requires:       pkgconfig
 Requires:       shared-mime-info
 Requires:       hicolor-icon-theme
@@ -32,39 +31,29 @@ proposed in 1995, though it seems they have never been registered with IANA.
 %prep
 %setup -q
 sed -i -e '/^libdir/d' chemical-mime-data.pc.in
+%patch0 -p1
 
 
 %build
+# required for patch0
+autoreconf
+
+export RSVG=%{_bindir}/rsvg-convert
 %configure --disable-update-database \
            --without-gnome-mime \
            --without-pixmaps
-make %{?_smp_mflags}
+%make
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make INSTALL="install -p" install DESTDIR=$RPM_BUILD_ROOT
-cp -pR $RPM_BUILD_ROOT%{_docdir}/%{name} __docs
-rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
+make INSTALL="install -p" install DESTDIR=%{buildroot}
+cp -pR %{buildroot}%{_docdir}/%{name} __docs
+rm -rf %{buildroot}%{_docdir}/%{name}
 
 %find_lang %{name}
 
-%post
-update-mime-database %{_datadir}/mime &> /dev/null || :
-touch --no-create %{_datadir}/icons/hicolor || :
-%{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
-
-%postun
-update-mime-database %{_datadir}/mime &> /dev/null || :
-touch --no-create %{_datadir}/icons/hicolor || :
-%{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 
 %files -f %{name}.lang
-%defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING HACKING NEWS README THANKS TODO
 %doc __docs/*
 %{_datadir}/icons/hicolor/*/mimetypes/gnome-mime-chemical.png
@@ -74,4 +63,37 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/pkgconfig/chemical-mime-data.pc
 
 
+
+
+
+%changelog
+* Thu Dec 09 2010 Oden Eriksson <oeriksson@mandriva.com> 0.1.94-6mdv2011.0
++ Revision: 617000
+- the mass rebuild of 2010.0 packages
+
+* Wed Sep 02 2009 Thierry Vignaud <tv@mandriva.org> 0.1.94-5mdv2010.0
++ Revision: 424829
+- rebuild
+
+* Wed Jul 23 2008 Thierry Vignaud <tv@mandriva.org> 0.1.94-4mdv2009.0
++ Revision: 243875
+- rebuild
+
+* Wed Jan 02 2008 Olivier Blin <oblin@mandriva.com> 0.1.94-2mdv2008.1
++ Revision: 140692
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+
+* Mon Mar 05 2007 Nicolas Lécureuil <neoclust@mandriva.org> 0.1.94-2mdv2007.1
++ Revision: 132761
+- Fix group
+
+* Sun Feb 25 2007 Emmanuel Andry <eandry@mandriva.org> 0.1.94-1mdv2007.1
++ Revision: 125468
+- buildrequires librsvg
+- buildrequires libxslt-proc
+- Import chemical-mime-data
 

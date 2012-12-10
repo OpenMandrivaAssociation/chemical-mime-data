@@ -1,0 +1,13 @@
+Index: chemical-mime-data-0.1.94/icons/hicolor/Makefile.am
+===================================================================
+--- chemical-mime-data-0.1.94.orig/icons/hicolor/Makefile.am
++++ chemical-mime-data-0.1.94/icons/hicolor/Makefile.am
+@@ -24,7 +24,7 @@ if BOOL_HICOLOR_THEME
+ 	gzip $< -c > $@
+ 	for size in $(icon_sizes) ; do \
+ 		if test "x$(RSVG)" != "x" ; then \
+-			$(RSVG) -w $${size} -h $${size} -f png $< $*_$${size}.png ; \
++			$(RSVG) -w $${size} -h $${size} -f png $< -o $*_$${size}.png ; \
+ 		else \
+ 			$(CONVERT) $< -resize $${size}x$${size} $*_$${size}.png ; \
+ 		fi \
