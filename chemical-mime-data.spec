@@ -11,7 +11,7 @@ BuildArch:	noarch
 
 BuildRequires:	intltool
 BuildRequires:	librsvg
-BuildRequires:	shared-mime-info
+BuildRequires:	pkgconfig(shared-mime-info)
 BuildRequires:	xsltproc
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(librsvg-2.0)
