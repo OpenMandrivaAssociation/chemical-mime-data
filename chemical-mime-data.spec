@@ -1,7 +1,7 @@
 Summary:	Support for chemical/* MIME types
 Name:		chemical-mime-data
 Version:	0.1.94
-Release:	18
+Release:	19
 Group:		System/Libraries
 License:	LGPLv2.1
 Url:		http://sourceforge.net/projects/chemical-mime/
@@ -34,22 +34,21 @@ Requires:	%{name} = %{version}-%{release}
 The pkgconfig for %{name}.
 
 %prep
-%setup -q
+%autosetup -p1
 sed -i -e '/^libdir/d' chemical-mime-data.pc.in
-%apply_patches
 # required for patch0
 autoreconf
 
 %build
 export RSVG=%{_bindir}/rsvg-convert
-%configure2_5x \
+%configure \
 	--disable-update-database \
 	--without-gnome-mime \
 	--without-pixmaps
-%make
+%make DATADIRNAME=share
 
 %install
-%makeinstall_std
+%makeinstall_std DATADIRNAME=share
 cp -pR %{buildroot}%{_docdir}/%{name} __docs
 rm -rf %{buildroot}%{_docdir}/%{name}
 
