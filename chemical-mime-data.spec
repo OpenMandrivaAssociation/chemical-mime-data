@@ -1,7 +1,7 @@
 Summary:	Support for chemical/* MIME types
 Name:		chemical-mime-data
 Version:	0.1.94
-Release:	19
+Release:	20
 Group:		System/Libraries
 License:	LGPLv2.1
 Url:		http://sourceforge.net/projects/chemical-mime/
