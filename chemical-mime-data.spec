@@ -4,7 +4,7 @@ Version:	0.1.94
 Release:	20
 Group:		System/Libraries
 License:	LGPLv2.1
-Url:		http://sourceforge.net/projects/chemical-mime/
+Url:		https://sourceforge.net/projects/chemical-mime/
 Source0:	http://dl.sourceforge.net/chemical-mime/%{name}-%{version}.tar.bz2
 Patch0:		chemical-mime-data-0.1.94-rosa-rsvg.patch
 BuildArch:	noarch
